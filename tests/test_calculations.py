@@ -46,3 +46,23 @@ def test_total_sales():
 def test_total_orders():
     df = _sample_sales_df()
     assert total_orders(df) == 3
+
+
+from calculations import monthly_sales_trend
+
+
+def test_monthly_sales_trend():
+    df = pd.DataFrame(
+        {
+            "date": pd.to_datetime(["2024-02-01", "2024-01-03", "2024-01-04"]),
+            "total_amount": [25.0, 100.0, 50.0],
+        }
+    )
+
+    result = monthly_sales_trend(df)
+
+    assert list(result["month"]) == [
+        pd.Timestamp("2024-01-01"),
+        pd.Timestamp("2024-02-01"),
+    ]
+    assert list(result["sales"]) == [150.0, 25.0]
