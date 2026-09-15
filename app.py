@@ -31,7 +31,7 @@ def render_trend_chart(df):
     monthly = monthly_sales_trend(df)
     fig = px.line(monthly, x="month", y="sales", markers=True)
     fig.update_layout(xaxis_title="Month", yaxis_title="Sales ($)")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def render_category_chart(df):
@@ -39,7 +39,7 @@ def render_category_chart(df):
     data = sales_by_category(df)
     fig = px.bar(data, x="category", y="sales")
     fig.update_layout(xaxis_title="Category", yaxis_title="Sales ($)")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def render_region_chart(df):
@@ -47,7 +47,7 @@ def render_region_chart(df):
     data = sales_by_region(df)
     fig = px.bar(data, x="region", y="sales")
     fig.update_layout(xaxis_title="Region", yaxis_title="Sales ($)")
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
 
 def main():
