@@ -40,3 +40,9 @@ Tests (`tests/test_calculations.py`) use hand-crafted fixture DataFrames or a `t
 ## Scope
 
 This is Phase 1 only (see the PRD's Phase 2 list for what's explicitly excluded): no auth, no filtering/date-range, no DB integration, no export. Don't add these without checking the PRD first — it's a deliberate boundary, not an oversight.
+
+## Lessons
+
+- Bare `pytest` does not resolve `from calculations import ...` on its own — this repo has no `tests/__init__.py`, so pytest's default import mode inserts `tests/` onto `sys.path`, not the repo root. `pyproject.toml`'s `pythonpath = ["."]` fixes this; don't remove it, and don't reach for `PYTHONPATH=.` or `python -m pytest` workarounds instead.
+- Streamlit's `use_container_width` parameter is deprecated (removal deadline already passed); use `width="stretch"` on `st.plotly_chart` calls instead. `requirements.txt` is unpinned, so a fresh install can resolve a Streamlit version that drops the old parameter entirely.
+- No browser is available in this environment for manual UI verification. Use `streamlit.testing.v1.AppTest` (`AppTest.from_file("app.py")`, `at.run(timeout=30)`) to inspect rendered metrics, chart data, and exceptions in-process — it's the reliable substitute used throughout this project's build.
