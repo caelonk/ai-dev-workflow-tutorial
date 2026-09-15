@@ -66,3 +66,30 @@ def test_monthly_sales_trend():
         pd.Timestamp("2024-02-01"),
     ]
     assert list(result["sales"]) == [150.0, 25.0]
+
+
+from calculations import sales_by_category, sales_by_region
+
+
+def _sample_breakdown_df():
+    return pd.DataFrame(
+        {
+            "category": ["Electronics", "Audio", "Electronics", "Wearables"],
+            "region": ["North", "South", "North", "East"],
+            "total_amount": [100.0, 50.0, 25.0, 75.0],
+        }
+    )
+
+
+def test_sales_by_category():
+    df = _sample_breakdown_df()
+    result = sales_by_category(df)
+    assert list(result["category"]) == ["Electronics", "Wearables", "Audio"]
+    assert list(result["sales"]) == [125.0, 75.0, 50.0]
+
+
+def test_sales_by_region():
+    df = _sample_breakdown_df()
+    result = sales_by_region(df)
+    assert list(result["region"]) == ["North", "East", "South"]
+    assert list(result["sales"]) == [125.0, 75.0, 50.0]

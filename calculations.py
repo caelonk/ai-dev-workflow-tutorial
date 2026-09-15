@@ -22,3 +22,23 @@ def monthly_sales_trend(df: pd.DataFrame) -> pd.DataFrame:
         .reset_index(drop=True)
     )
     return monthly.rename(columns={"total_amount": "sales"})
+
+
+def sales_by_category(df: pd.DataFrame) -> pd.DataFrame:
+    result = (
+        df.groupby("category", as_index=False)["total_amount"]
+        .sum()
+        .sort_values("total_amount", ascending=False)
+        .reset_index(drop=True)
+    )
+    return result.rename(columns={"total_amount": "sales"})
+
+
+def sales_by_region(df: pd.DataFrame) -> pd.DataFrame:
+    result = (
+        df.groupby("region", as_index=False)["total_amount"]
+        .sum()
+        .sort_values("total_amount", ascending=False)
+        .reset_index(drop=True)
+    )
+    return result.rename(columns={"total_amount": "sales"})
