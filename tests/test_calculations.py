@@ -22,3 +22,27 @@ def test_load_sales_data_missing_file_raises(tmp_path):
 
     with pytest.raises(FileNotFoundError):
         load_sales_data(str(missing_path))
+
+
+from calculations import total_orders, total_sales
+
+
+def _sample_sales_df():
+    return pd.DataFrame(
+        {
+            "date": pd.to_datetime(["2024-01-03", "2024-01-04", "2024-02-01"]),
+            "category": ["Electronics", "Audio", "Electronics"],
+            "region": ["North", "South", "East"],
+            "total_amount": [100.0, 50.0, 25.0],
+        }
+    )
+
+
+def test_total_sales():
+    df = _sample_sales_df()
+    assert total_sales(df) == 175.0
+
+
+def test_total_orders():
+    df = _sample_sales_df()
+    assert total_orders(df) == 3
